@@ -1,1 +1,52 @@
-<h1>Home Page</h1>
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-beta1/jquery.min.js"></script>
+</head>
+<body>
+<h2> Follow the Light and find unlock the Code</h2>
+<h5>madness entangelment since 2016</h5>
+<hr/>
+
+<table id="photosTable" class="table table-stripped">
+  <tr>
+    <th>Id</th>
+    <th>Title</th>
+  </tr>
+</table>
+
+
+
+<script>
+function photoUrl(farm, server, id, secret) {
+       return "https://farm" + farm + ".staticflickr.com/" +
+              server + "/" + id + "_" + secret + ".jpg";
+     }
+
+$(function () {
+	$.ajax( {
+		url: 'https://api.flickr.com/services/rest/?method=flickr.photos.search&tags=lighthouse&format=json&nojsoncallback=1&api_key=34e06a3ec196ebeb87819a91a2ff47c6',
+		dataType: 'json',
+		method: 'GET'
+	}).done(function (json) {
+			json.photos.photo.forEach(function (photo) {
+				var url = photoUrl(photo.farm, photo.server, photo.id, photo.secret);
+				var tr = '<tr><td><img src="' + url + '"/></td><td>' + photo.title + '</td></tr>';
+           $('tbody').append(tr);
+			});
+		});
+});
+</script>
+</body>
+</html>
+
+
+
+<!-- $('table').append(`
+					<tr>
+						<td>${photo.id}</td>
+						<td>${photo.title}</td>
+					</tr>
+				`); -->
